@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JANPIA 5〜10年後構想（たたき台）</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --spice: rgb(255, 218, 0);
+    --spice-bg: #fff9d6;
+    --spice-border: #e6c400;
+    --black: #000000;
+    --ink: #1a1a1a;
+    --muted: #5a5a5a;
+    --border: #e2e2e2;
+    --bg: #fafafa;
+    --white: #ffffff;
+    --sidebar-w: 168px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.85;
+    margin-left: var(--sidebar-w);
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--black);
+    overflow-y: auto;
+    padding: 20px 0 40px;
+    z-index: 100;
+  }
+  .sidebar-title {
+    color: var(--spice);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0 16px 12px;
+    border-bottom: 1px solid #333;
+    margin-bottom: 8px;
+  }
+  .nav-link {
+    display: block;
+    padding: 9px 16px;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 600;
+    border-left: 3px solid transparent;
+    line-height: 1.5;
+  }
+  .nav-link:hover { background: #1a1a1a; color: var(--spice); }
+  .nav-link.active {
+    background: #1a1a1a;
+    color: var(--spice);
+    border-left: 3px solid var(--spice);
+  }
+
+  @media (max-width: 700px) {
+    :root { --sidebar-w: 0px; }
+    .sidebar { display: none; }
+    body { margin-left: 0; }
+  }
+
+  .hero {
+    background: var(--black);
+    color: white;
+    padding: 56px 40px 48px;
+    border-bottom: 6px solid var(--spice);
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--spice);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .hero h1 { font-size: 26px; font-weight: 700; line-height: 1.5; margin-bottom: 18px; }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 10px 24px;
+    font-size: 13px; color: #d9d9d9;
+  }
+  .hero-meta span b { color: #fff; font-weight: 600; }
+  .badge {
+    display: inline-block;
+    background: var(--spice);
+    border: 1px solid var(--spice);
+    color: var(--black);
+    font-weight: 700;
+    font-size: 11.5px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-top: 16px;
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 40px 40px 100px; }
+
+  .note {
+    background: var(--spice-bg);
+    border-left: 4px solid var(--spice-border);
+    padding: 14px 18px;
+    border-radius: 6px;
+    font-size: 13.5px;
+    color: #4a4200;
+    margin-bottom: 36px;
+  }
+
+  .summary-box {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--spice);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 44px;
+  }
+  .summary-box h2 { font-size: 13px; color: var(--black); letter-spacing: 0.05em; margin-bottom: 14px; }
+  .summary-box ul { padding-left: 20px; }
+  .summary-box li { margin-bottom: 10px; }
+  .summary-box li:last-child { margin-bottom: 0; }
+
+  section { margin-bottom: 48px; }
+
+  h2.section-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--black);
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--spice);
+    margin-bottom: 20px;
+  }
+  h3.sub-title {
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--black);
+    margin: 24px 0 10px;
+  }
+
+  p { margin-bottom: 12px; }
+  ul, ol { padding-left: 22px; margin-bottom: 14px; }
+  li { margin-bottom: 6px; }
+
+  .table-wrap { overflow-x: auto; margin: 14px 0 20px; border: 1px solid var(--border); border-radius: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; background: var(--white); }
+  th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th:first-child, td:first-child { min-width: 6.5em; }
+  th { background: var(--black); color: var(--spice); font-weight: 700; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+
+  .axis-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--spice);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+  }
+  .axis-card h3 { color: var(--black); font-size: 15px; margin-bottom: 8px; }
+  .axis-card.c-green { border-left-color: var(--black); }
+  .axis-card.c-purple { border-left-color: var(--spice); }
+  .axis-card.c-orange { border-left-color: var(--black); }
+
+  .warn { color: var(--black); font-weight: 700; background: var(--spice); padding: 0 4px; border-radius: 3px; }
+
+  .tag-spice, .tag-janpia {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 0.92em;
+    padding: 0 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .tag-spice { background: var(--spice); color: var(--black); }
+  .tag-janpia { background: var(--black); color: var(--spice); }
+
+  .tag-kari {
+    display: inline-block;
+    font-size: 0.72em;
+    font-weight: 700;
+    padding: 0 5px;
+    border: 1.5px solid var(--black);
+    color: var(--black);
+    border-radius: 3px;
+    margin-left: 5px;
+    vertical-align: 2px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 8px 20px;
+    align-items: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .legend b { color: var(--ink); font-weight: 600; }
+
+  strong { color: var(--black); }
+
+  code { background: var(--spice-bg); padding: 1px 6px; border-radius: 4px; font-size: 0.92em; }
+
+  a { color: var(--black); text-decoration: underline; text-decoration-color: var(--spice); text-decoration-thickness: 2px; }
+
+  footer {
+    max-width: 860px; margin: 0 auto; padding: 0 40px 60px;
+    font-size: 12.5px; color: var(--muted); font-style: italic;
+    border-top: 1px solid var(--border); padding-top: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 40px 20px 36px; }
+    .wrap { padding: 28px 20px 70px; }
+    footer { padding: 0 20px 40px; }
+  }
+
+  @media print {
+    .hero { background: var(--black) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-title">MENU</div>
+  <a href="#s0" class="nav-link" data-sec="0">0. ストーリーライン</a>
+  <a href="#s1" class="nav-link" data-sec="1">1. なぜ今考えるか</a>
+  <a href="#s2" class="nav-link" data-sec="2">2. 現在地の整理</a>
+  <a href="#s3" class="nav-link" data-sec="3">3. 4つの軸</a>
+  <a href="#s4" class="nav-link" data-sec="4">4. 時間軸シナリオ</a>
+  <a href="#s5" class="nav-link" data-sec="5">5. サイトの役割</a>
+  <a href="#s6" class="nav-link" data-sec="6">6. 未検証の仮説</a>
+  <a href="#s7" class="nav-link" data-sec="7">7. 社内MTG論点</a>
+  <a href="#s8" class="nav-link" data-sec="8">8. 次のアクション</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">構想たたき台 &middot; 社内検討用</div>
+    <h1>JANPIA 5〜10年後構想（たたき台）</h1>
+    <div class="hero-meta">
+      <span><b>作成日</b> 2026-07-24</span>
+      <span><b>作成</b> スパイスファクトリー株式会社</span>
+      <span><b>ステータス</b> ドラフト（未先方共有）</span>
+    </div>
+    <div class="badge">「提案書」ではなく、これからとJANPIA様とのディスカッションの起点となる構想たたき台</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="note">
+    <strong>本資料はSPICE（スパイスファクトリー）が独自に作成した提案・検討用資料であり、JANPIAの公式見解・承認事項ではありません。</strong><br>
+    ⚠️ マークは仮説・推測です。社内MTG・先方ヒアリングで検証してください。<br>
+    ⚠️ 関連資料：<a href="../../docs/future-vision.md">future-vision.md</a>（1〜3年の機能ロードマップ）／<a href="../../docs/janpia-current-needs.md">janpia-current-needs.md</a>（現状課題整理）
+  </div>
+
+  <div class="legend">
+    <span><span class="tag-spice">スパイス</span> <b>SPICE</b>（スパイスファクトリー）：車さん・松本さん・大西さん・高木さん・流郷さん・河村さん</span>
+    <span><span class="tag-janpia">JANPIA</span> <b>JANPIA</b>（一般財団法人日本民間公益活動連携機構）：芥田さん（芥田部長）</span>
+  </div>
+
+  <div class="summary-box">
+    <h2>エグゼクティブサマリー</h2>
+    <ul>
+      <li><a href="../../docs/future-vision.md">future-vision.md</a>は「1〜3年でインフラサイトに何の機能を足すか」という<strong>機能ロードマップ</strong>。本ドキュメントはその先、<strong>JANPIAという組織・制度が5〜10年後に社会の中でどうなっているべきか</strong>という<strong>ポジショニング構想</strong>を描く。</li>
+      <li>5〜10年後の姿を一言でいうと：<strong>JANPIAは休眠預金を活用した社会課題解決の「プラットフォーム」として社会に定着し、SPICEはそのプラットフォームを裏側で動かし続ける「OS」を担っている状態</strong>。</li>
+      <li>直近の追い風として、<strong>2028年の設立10周年</strong>という対外発信の節目があり、<span class="tag-janpia">芥田さん</span>（芥田部長）からもPR的な発信意向が示唆されている。長期構想はこの10周年を最初のマイルストーンとして設計するのが自然。</li>
+      <li>加えて、<span class="tag-spice">河村さん</span>がJANPIA主催のマッチングイベントに参加したことで、既存のキャリア教育受入れとは別に、KIBOU CURRYの寄付先として子ども食堂ネットワークとつながれる可能性が生まれている。JANPIAとの正式な連携ではないが、軸C（エコシステム）の具体例・今後のアクション候補として扱う。</li>
+      <li>次のアクションは、本たたき台を材料に<span class="tag-spice">流郷さん</span>と社内MTGを行い、<strong>先方にぶつける軸（何を・どの温度感で）</strong>を絞り込むこと。</li>
+    </ul>
+  </div>
+
+  <section id="s0">
+    <h2 class="section-title">0. ストーリーライン：JANPIAは「プラットフォーム」、SPICEは「OS」</h2>
+    <p>5〜10年後の関係性を一言で表す比喩として、以下の役割分担を置く。</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>比喩</th><th>実体</th><th>役割</th></tr>
+        <tr><td><strong>プラットフォーム</strong></td><td>JANPIA（休眠預金活用制度）</td><td>FDO・ADO・企業・自治体・個人など多様な担い手が出会い、資金と課題解決がつながる「場」そのものを提供する</td></tr>
+        <tr><td><strong>OS</strong></td><td>SPICE（スパイスファクトリー）</td><td>その場を止めずに動かし続ける仕組み（AI申請支援・ナレッジ基盤・データ可視化・UX設計）を裏側で設計・実装し続ける</td></tr>
+      </table>
+    </div>
+    <p>JANPIAが表に立つ「プラットフォーム」であることは変わらない。SPICEはそれを支える縁の下の力持ち＝「OS」として、長期的な技術・データパートナーの立ち位置を築く。</p>
+    <div class="note" style="margin-top: 16px;">この物語は現時点では<strong>SPICE側の関与構想</strong>であり、JANPIAと合意した位置づけではない。社内MTGで「この物語をどこまで先方に出すか」を検討したうえで扱うこと。</div>
+  </section>
+
+  <section id="s1">
+    <h2 class="section-title">1. なぜ今「5〜10年後」を考えるのか</h2>
+    <div class="table-wrap">
+      <table>
+        <tr><th>きっかけ</th><th>内容</th></tr>
+        <tr><td>JANPIA様アンケート回答</td><td>5〜10年後の構想について提案・対話を期待する旨の記載を確認（<span class="tag-spice">松本さん</span>指摘）</td></tr>
+        <tr><td>2028年 設立10周年</td><td>先方・<span class="tag-janpia">芥田さん</span>（芥田部長）より「具体構想がなくても対外的に何か発信したい」という意向あり（<span class="tag-spice">大西さん</span>共有）。長期構想の足掛かりにできる</td></tr>
+        <tr><td>PR的意向</td><td>制度認知度19%という課題を踏まえ、10周年は対外PRの好機と先方も認識している可能性が高い</td></tr>
+        <tr><td><span class="tag-spice">河村さん</span>の企業マッチング実例</td><td>JANPIA主催マッチング会参加を機に、KIBOU CURRYの寄付先として子ども食堂ネットワークとつながれる機会が発生。JANPIAとの正式な連携ではなく、今後のアクション候補</td></tr>
+        <tr><td>社内合意</td><td><span class="tag-spice">高木さん</span>・<span class="tag-spice">流郷さん</span>の承認済み。8月中に「たたき台→社内MTG→先方打診」を完了させる方針</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="s2">
+    <h2 class="section-title">2. 現在地の整理（情報の性質ごとに区別）</h2>
+    <div class="note">情報源によって確度が異なるため、3層に分けて整理する。⚠️ <a href="../../docs/future-vision.md">future-vision.md</a>・⚠️<a href="../../docs/janpia-current-needs.md">janpia-current-needs.md</a>はJANPIAの公式見解ではなく、SPICEが独自にまとめた提案・仮説資料であり、JANPIAが実際に着手・合意しているとは限らない。⚠️ JANPIA提供資料として引用してよいのは<a href="../../docs/2026_jigyo_keikaku_syushiyosan_point.md">2026年度事業計画PDF</a>（先方提供）のみ。</div>
+
+    <h3 class="sub-title">2-1. 実際に今動いている開発（事実：Notion議事録「定例・分科会議事録_Ph26#1」2026-07-22時点）</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>項目</th><th>状況</th></tr>
+        <tr><td>ナレッジ（FAQ検索・RAG連携）</td><td>開発中。リリース8/17予定（8/6から延期）</td></tr>
+        <tr><td>グロナビ・TOPページ</td><td>UI/UXデザイン調整中</td></tr>
+        <tr><td>「はじめての方向けコンテンツ」</td><td>デザイン対応中</td></tr>
+        <tr><td>相談ページ</td><td>原稿修正・動線改修、JANPIA様の要件確定待ち</td></tr>
+        <tr><td>WordPressセキュリティ</td><td>現行v6.6は公式サポート終了バージョン。下半期での更新対応を検討中</td></tr>
+      </table>
+    </div>
+    <p>これはインフラサイトの保守・改修フェーズであり、<a href="../../docs/future-vision.md">future-vision.md</a>が提案するAI申請書コーチ・マッチング等の新規AI機能とは<strong>別のスコープ</strong>。ただし「ナレッジ（RAG）」は、future-vision.mdの「AI搭載FAQチャットボット」構想と方向性が重なる先行事例と言える。</p>
+
+    <h3 class="sub-title">2-2. JANPIA公式資料で確認できる事実（<a href="../../docs/2026_jigyo_keikaku_syushiyosan_point.md">2026年度事業計画PDF</a>より）</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>観点</th><th>内容</th></tr>
+        <tr><td>認知</td><td>制度を「内容まで知っている」のは全体の<strong>19%</strong></td></tr>
+        <tr><td>申請の質</td><td>2025年度 採択率<strong>約18%</strong>（申請127件／採択23件）</td></tr>
+        <tr><td>支援体制</td><td>資金分配団体の<strong>空白県16県</strong></td></tr>
+        <tr><td>実績</td><td>累計<strong>255事業・396.9億円</strong></td></tr>
+        <tr><td>休プラ</td><td>「休眠預金活用プラットフォーム（休プラ）」＝<strong>ヒト・モノ・情報等が循環する休眠預金等活用事業の"ハブ"</strong>。2025年度に開発・運用開始済み。2026年度は+15百万円でAIナレッジ基盤・CRM構築を含む継続開発</td></tr>
+      </table>
+    </div>
+
+    <h3 class="sub-title">2-3. SPICE社内検討の構想（⚠️提案前：future-vision.md, janpia-current-needs.md）</h3>
+    <ul>
+      <li>AI申請書コーチ、FDO×ADOマッチング、社会課題ダッシュボード等は、<strong>JANPIAに提案したこともなければ依頼・承認を受けたこともない</strong>、SPICE社内の検討資料上のアイデア。</li>
+      <li>5〜10年後の構想（本ドキュメント）は、2-1の実際の開発と2-2の公式事実を土台に、2-3のSPICE社内検討がどこまで実現し得るかを見立てたもの。</li>
+    </ul>
+  </section>
+
+  <section id="s3">
+    <h2 class="section-title">3. 5〜10年後のJANPIA：4つの軸（⚠️仮の目標）</h2>
+    <div class="note" style="margin-bottom: 20px;"><strong>この章は事実の記述や原因の分析（仮説）ではなく、SPICEが現時点の公式資料・Slack情報をもとに描いた「仮の目標」＝ありたい姿の叩き台です。JANPIAの公式見解・合意事項ではありません。</strong>社内MTG・先方ヒアリングを経て検証・修正すること。</div>
+
+    <div class="axis-card">
+      <h3>⚠️ 軸A｜認知：「知る人ぞ知る制度」から「社会インフラ」へ（仮の目標）</h3>
+      <ul>
+        <li>認知度19%という現状を起点に、10年後には<strong>休眠預金制度が社会課題解決の代表的な仕組みとして一般に認知されている</strong>状態を目指す。<span class="tag-kari">仮</span></li>
+        <li>累計実績（255事業・396.9億円）の「量」の情報公開から、<strong>個々の成果が社会にどう届いたかという「質」の可視化</strong>（インパクトの物語化）へ。<span class="tag-kari">仮</span></li>
+        <li>10周年（2028年）を、この認知転換の最初の対外発信ポイントとして活用する。<span class="tag-kari">仮</span></li>
+      </ul>
+    </div>
+
+    <div class="axis-card c-green">
+      <h3>⚠️ 軸B｜支援の形：人手中心から「AIが伴走するプラットフォーム」へ（仮の目標）</h3>
+      <ul>
+        <li>「休眠預金活用プラットフォーム（休プラ）」＝ヒト・モノ・情報が循環するハブ（2025年度運用開始済み・事実）を、5〜10年後には<strong>申請前〜採択後〜次の申請までのライフサイクル全体をAIが伴走して支える基盤</strong>へと発展させる。<span class="tag-kari">仮</span></li>
+        <li>AI申請書コーチ・PO知見のナレッジ化により、採択率18%・空白県16県といった構造的課題を緩和する。<span class="tag-kari">仮</span></li>
+        <li>インフラサイトが、この基盤の「顔」となるフロントエンドの役割を担う。<span class="tag-kari">仮</span></li>
+      </ul>
+    </div>
+
+    <div class="axis-card c-purple">
+      <h3>⚠️ 軸C｜エコシステム：JANPIA単独運営から「開かれた連携基盤」へ（仮の目標）</h3>
+      <ul>
+        <li>現状はJANPIA・FDO・ADOという限られた関係者内で完結しているが、5〜10年後は<strong>企業・大学・自治体・個人（人材）を巻き込むオープンなエコシステム</strong>へ拡張する。<span class="tag-kari">仮</span></li>
+        <li><span class="tag-spice">河村さん</span>がJANPIA主催のマッチング会（成果報告会）に参加したことで、既存のキャリア教育受入れとは別に、KIBOU CURRYの寄付先として全国の子ども食堂ネットワークとつながれる機会が生まれた（ここは事実）。JANPIAとの正式な連携ではないが、JANPIAのマッチング機能が企業側にも実際に働いた一例であり、軸Cの仮説を補強する手触りとして参照できる。</li>
+        <li>PO人材の地域偏在（空白県16県）という課題も、外部人材・企業人材を巻き込む仕組みで解消する。<span class="tag-kari">仮</span></li>
+      </ul>
+    </div>
+
+    <div class="axis-card c-orange">
+      <h3>⚠️ 軸D｜データ・インパクト：実績の記録から「政策提言・社会的検証」基盤へ（仮の目標）</h3>
+      <ul>
+        <li>社会課題構造化マップ・採択データの蓄積を、5〜10年後には<strong>日本の社会課題解決に関する一次データ資産</strong>として、政策提言や研究機関との連携に活用する。<span class="tag-kari">仮</span></li>
+        <li>JANPIAが「休眠預金を配分する組織」から「社会課題解決の効果を可視化・検証する組織」へと役割を広げる。<span class="tag-kari">仮</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="s4">
+    <h2 class="section-title">4. 時間軸のシナリオ案（⚠️SPICE社内検討・提案前、2026年〜2036年）</h2>
+    <div class="note">これはJANPIAと合意したマイルストーンではありません。SPICEが社内検討のために置いた仮のシナリオであり、先方には一切提示していない段階。「2026年度（現在）」の行のみ事実、それ以降はすべてSPICE社内の見立て。</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>時期</th><th>フェーズ（仮）</th><th>主な状態</th></tr>
+        <tr><td>2026年度（現在・事実）</td><td>保守・改修フェーズ</td><td>【事実】ナレッジ（FAQ・RAG）8/17リリース予定、グロナビ・TOP・相談ページのUI改修中（Ph26#1）。休プラは2026年度予算+15百万円でJANPIA版CRM構築・AIナレッジ基盤を含む継続開発（出典：<a href="../../docs/2026_jigyo_keikaku_syushiyosan_point.md">2026年度事業計画PDF</a> p.21収支予算内訳）</td></tr>
+        <tr><td>2027〜2028年<span class="tag-kari">仮</span></td><td>体験型プラットフォーム稼働／10周年</td><td>休プラの中核機能が稼働開始している<span class="tag-kari">仮</span><br>2028年10周年で対外発信（軸Aの起点）</td></tr>
+        <tr><td>2029〜2031年<span class="tag-kari">仮</span></td><td>エコシステム拡張</td><td>企業・大学等との連携が本格化している<span class="tag-kari">仮</span><br>PO人材の地域偏在が緩和され始める</td></tr>
+        <tr><td>2032〜2036年<span class="tag-kari">仮</span></td><td>社会インフラ化</td><td>認知度・採択率が構造的に改善している<span class="tag-kari">仮</span><br>JANPIAの実績データが政策提言・研究活用の基盤として定着</td></tr>
+      </table>
+    </div>
+    <p style="color: var(--muted); font-size: 13px;">数値目標（認知度◯%、採択率◯%等）は現時点では置かない。ヒアリングでJANPIA側の危機感・目標水準を確認したうえで具体化する。</p>
+  </section>
+
+  <section id="s5">
+    <h2 class="section-title">5. インフラサイトの役割の進化（⚠️1〜3年以降はSPICE社内検討・仮の目標）</h2>
+    <div class="note">4.の時間軸シナリオと対応関係を揃えている：1〜3年＝2027〜2028年（10周年）、3〜5年＝2029〜2031年（エコシステム拡張）、5〜10年＝2032〜2036年（社会インフラ化）。</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>フェーズ</th><th>インフラサイトの役割</th></tr>
+        <tr><td>現在（事実）</td><td>情報ポータル＋申請手続きへの入口。Ph26#1でナレッジ（FAQ・RAG）・グロナビ・TOP・相談ページを改修中</td></tr>
+        <tr><td>1〜3年（<a href="../../docs/future-vision.md">future-vision.md</a>｜SPICE社内検討・提案前）</td><td>AIチャットボット・申請コーチ・マッチング機能を備え、休プラの中核フロントエンドとしての統合が進む。<span class="tag-kari">仮</span>（4.の2027〜2028年10周年と対応）</td></tr>
+        <tr><td>3〜5年</td><td>企業・大学等を巻き込む<strong>エコシステムの入口</strong>として機能拡張する。<span class="tag-kari">仮</span>（4.の2029〜2031年エコシステム拡張と対応）</td></tr>
+        <tr><td>5〜10年</td><td>社会的インパクトの可視化基盤として定着する（キャリア支援連携との接続を含む）。<span class="tag-kari">仮</span>（4.の2032〜2036年社会インフラ化と対応）</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="s6">
+    <h2 class="section-title">6. 未検証の仮説（ヒアリング・社内MTGで確認したいこと）</h2>
+    <div class="table-wrap">
+      <table>
+        <tr><th>⚠️ 仮説</th><th>確認したいポイント</th></tr>
+        <tr><td>10周年に向けて対外発信の具体スケジュール・予算感がすでにある</td><td>いつ頃から準備が動きそうか、JANPIA側の温度感</td></tr>
+        <tr><td><span class="tag-spice">河村さん</span>が得たKIBOU CURRY×子ども食堂ネットワークの接続機会を、JANPIAとの継続的な関係構築につなげられるか</td><td>接続の具体スコープ、JANPIA側の窓口担当者、他社でも同様の機会が生まれているか</td></tr>
+        <tr><td>「体験型支援プラットフォーム（休プラ）」の完成イメージにJANPIA自身がどこまで具体像を持っているか</td><td>休プラのゴールイメージ、外部パートナーが関われる範囲</td></tr>
+        <tr><td>JANPIAとして「5〜10年後」に期待しているのは事業内容の話か、対外的なブランド・PRの話か</td><td>アンケート回答の意図（提案期待の中身）</td></tr>
+        <tr><td>社会課題データの政策提言・研究活用について、JANPIAに現状ニーズがあるか</td><td>既存の研究機関・自治体連携の有無</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="s7">
+    <h2 class="section-title">7. 社内MTGでの論点</h2>
+    <ol>
+      <li>本たたき台の4軸（認知／支援の形／エコシステム／データ・インパクト）のうち、どれを先方との対話の主軸に据えるか</li>
+      <li><strong>2028年10周年</strong>をどう使うか（対外PR起点として前面に出すか、あくまで背景情報に留めるか）</li>
+      <li><span class="tag-spice">河村さん</span>がJANPIA主催イベントで得た企業マッチングの実例（KIBOU CURRY×子ども食堂ネットワーク）を、今後のアクションとしてどう追いかけるか</li>
+      <li>先方への打診の温度感：「ディスカッションの場」であることをどう伝えるか（提案営業に見えないようにする工夫）</li>
+      <li>8月中の完了目標に対して、次アクション（先方打診の文面・タイミング）をいつ確定するか</li>
+    </ol>
+  </section>
+
+  <section id="s8">
+    <h2 class="section-title">8. 次のアクション</h2>
+    <div class="table-wrap">
+      <table>
+        <tr><th>No.</th><th>アクション</th><th>担当</th></tr>
+        <tr><td>1</td><td>本たたき台をもとに<span class="tag-spice">流郷さん</span>と社内MTGを実施</td><td><span class="tag-spice">松本さん</span>・<span class="tag-spice">車さん</span></td></tr>
+        <tr><td>2</td><td>社内MTGのFBを反映し、先方に提示する論点を絞り込む</td><td><span class="tag-spice">車さん</span></td></tr>
+        <tr><td>3</td><td>先方へMTG（ディスカッションの場）を打診</td><td><span class="tag-spice">松本さん</span></td></tr>
+        <tr><td>4</td><td><span class="tag-spice">河村さん</span>が得たKIBOU CURRY×子ども食堂ネットワークの接続機会をフォローアップし、JANPIAとの継続的な関係の可能性を確認</td><td><span class="tag-spice">河村さん</span>・<span class="tag-spice">車さん</span></td></tr>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  本ドキュメントはJANPIA様への提案準備・社内検討用の構想たたき台です。数値目標・スケジュールは仮説段階であり、ヒアリング・社内協議を経て具体化すること。
+</footer>
+
+<script>
+  const links = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('section[id^="s"]');
+  const map = new Map();
+  links.forEach(l => map.set(l.getAttribute('data-sec'), l));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const num = entry.target.id.replace('s', '');
+      const link = map.get(num);
+      if (!link) return;
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
