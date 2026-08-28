@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script src="../assets/gate.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JANPIA インフラサイト — 将来ビジョン</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0f2a5c;
+      --blue: #1a4fa0;
+      --blue-light: #e8eef8;
+      --green: #2d6a4f;
+      --green-bg: #eaf5ef;
+      --purple: #6b3fa0;
+      --purple-bg: #f0eaf8;
+      --orange: #c9620a;
+      --orange-bg: #fdf0e5;
+      --accent: #e85d04;
+      --gold: #f4a261;
+      --text: #1a1a2e;
+      --muted: #556070;
+      --border: #dde3ec;
+      --bg: #f5f7fb;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    /* ============================
+       HERO
+    ============================ */
+    .hero {
+      background: linear-gradient(160deg, var(--navy) 0%, #1e3a78 60%, #2a5298 100%);
+      color: white;
+      padding: 72px 40px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-inner { max-width: 760px; margin: 0 auto; position: relative; }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(22px, 4vw, 34px);
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 20px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    .hero-lead {
+      font-size: 15px;
+      line-height: 1.85;
+      opacity: 0.88;
+      max-width: 620px;
+      margin-bottom: 32px;
+    }
+    .hero-meta {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      opacity: 0.6;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 20px;
+    }
+
+    /* ============================
+       LAYOUT
+    ============================ */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 64px 24px 100px;
+    }
+
+    /* ============================
+       CHAPTER
+    ============================ */
+    .chapter { margin-bottom: 80px; }
+
+    .chapter-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: var(--blue-light);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .chapter h2 {
+      font-size: clamp(19px, 3vw, 24px);
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+    .chapter-desc {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 32px;
+      max-width: 620px;
+    }
+
+    /* ============================
+       PAIN CARDS
+    ============================ */
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .pain-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 18px;
+    }
+    .pain-card .who {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--blue);
+      background: var(--blue-light);
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+    .pain-card p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    /* ============================
+       PHILOSOPHY
+    ============================ */
+    .philosophy {
+      background: linear-gradient(135deg, var(--navy) 0%, #1a3a7a 100%);
+      border-radius: 12px;
+      padding: 36px 36px;
+      color: white;
+    }
+    .philosophy-quote {
+      font-size: clamp(16px, 2.5vw, 20px);
+      font-weight: 800;
+      line-height: 1.5;
+      border-left: 4px solid var(--gold);
+      padding-left: 18px;
+      margin-bottom: 18px;
+      color: #f0f4ff;
+    }
+    .philosophy p {
+      font-size: 14px;
+      opacity: 0.85;
+      line-height: 1.9;
+    }
+    .philosophy strong { color: var(--gold); font-weight: 700; }
+
+    /* ============================
+       PHASE SECTION
+    ============================ */
+    .phase-section { margin-bottom: 64px; }
+
+    .phase-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .phase-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .phase-pill.short { background: var(--green-bg); color: var(--green); border: 1.5px solid #b7dfc8; }
+    .phase-pill.mid   { background: var(--purple-bg); color: var(--purple); border: 1.5px solid #c9b3e8; }
+    .phase-pill.long  { background: var(--orange-bg); color: var(--orange); border: 1.5px solid #f0c59a; }
+    .phase-pill .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .short .dot { background: var(--green); }
+    .mid   .dot { background: var(--purple); }
+    .long  .dot { background: var(--orange); }
+
+    .phase-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .phase-tagline {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ============================
+       FEATURE CARDS
+    ============================ */
+    .feature-cards { display: flex; flex-direction: column; gap: 20px; }
+
+    .fcard {
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .fcard:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.09); }
+    .fcard.featured { border-color: var(--accent); }
+
+    .fcard-top {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .fcard-num {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      opacity: 0.6;
+      margin-bottom: 4px;
+    }
+    .fcard h3 { font-size: 16px; font-weight: 700; color: var(--navy); }
+    .featured-badge {
+      background: var(--accent);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .fcard-body { padding: 20px 24px; }
+
+    .fcard-summary {
+      font-size: 14.5px;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+
+    .fcard-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .tag {
+      font-size: 12px;
+      padding: 3px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: var(--bg);
+    }
+    .tag strong { color: var(--text); font-weight: 700; margin-right: 4px; }
+
+    .fcard-detail {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .fcard-detail .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 4px;
+    }
+
+    .fcard-footer {
+      padding: 12px 24px;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+    }
+    .diff-stars { color: var(--gold); letter-spacing: 1px; }
+    .diff-stars .dim { color: #d0d8e8; }
+    .diff-chip {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 6px;
+    }
+    .diff-low  { background: #e0f5e9; color: var(--green); }
+    .diff-mid  { background: #fff3cd; color: #856404; }
+    .diff-high { background: #fde8e8; color: #c0392b; }
+    .diff-text { color: var(--muted); font-size: 12px; }
+
+    /* ============================
+       SUMMARY TABLE
+    ============================ */
+    .summary-wrap {
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+    .summary-table thead th {
+      background: var(--navy);
+      color: white;
+      padding: 13px 18px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+    }
+    .summary-table tbody tr:nth-child(even) { background: #f9fafb; }
+    .summary-table td {
+      padding: 12px 18px;
+      border-top: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .summary-table td:first-child { font-weight: 600; }
+
+    /* ============================
+       ROADMAP TIMELINE
+    ============================ */
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+      margin-bottom: 48px;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 10px; top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--green), var(--purple), var(--orange));
+      border-radius: 2px;
+    }
+    .tl-item {
+      position: relative;
+      margin-bottom: 28px;
+    }
+    .tl-item::before {
+      content: "";
+      position: absolute;
+      left: -26px; top: 6px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 0 0 2px currentColor;
+    }
+    .tl-item.short { color: var(--green); }
+    .tl-item.mid   { color: var(--purple); }
+    .tl-item.long  { color: var(--orange); }
+    .tl-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .tl-text { font-size: 14px; color: var(--text); font-weight: 600; }
+    .tl-sub  { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+    /* ============================
+       RECOMMENDATION
+    ============================ */
+    .rec-box {
+      background: linear-gradient(135deg, #fff8f4 0%, #fff2e8 100%);
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: 36px;
+    }
+    .rec-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .rec-box h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 18px;
+      line-height: 1.4;
+    }
+    .rec-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .rec-list li {
+      display: flex;
+      gap: 12px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+    .rec-list li::before {
+      content: "✓";
+      flex-shrink: 0;
+      width: 22px; height: 22px;
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    /* ============================
+       FOOTER
+    ============================ */
+    .doc-footer {
+      margin-top: 64px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 2;
+    }
+
+    /* ============================
+       DIVIDER
+    ============================ */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 48px 0;
+    }
+
+    @media (max-width: 600px) {
+      .hero { padding: 48px 20px 44px; }
+      .container { padding: 40px 16px 80px; }
+      .pain-grid { grid-template-columns: 1fr 1fr; }
+      .philosophy { padding: 24px 20px; }
+      .rec-box { padding: 24px 20px; }
+      .fcard-top, .fcard-body, .fcard-footer { padding-left: 18px; padding-right: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Future Vision Document / 将来ビジョン</div>
+      <h1>JANPIAインフラサイトは、<br><em>誰のための何になれるか。</em></h1>
+      <p class="hero-lead">
+        申請が難しい、情報が多すぎる、どこから始めればいいかわからない——<br>
+        現場で積み重なる小さな「壁」を、テクノロジーで取り除く。<br>
+        このサイトが目指すのは、休眠預金を使って社会を変えたい人たちの<strong style="color:#f4a261">インフラ</strong>になることだ。
+      </p>
+      <div class="hero-meta">
+        <span>作成日：2026-06-17</span>
+        <span>作成：スパイスファクトリー株式会社</span>
+        <span>ステータス：ドラフト（検討中）</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Chapter 0: 前提 -->
+    <div class="chapter">
+      <div class="chapter-label">Chapter 0</div>
+      <h2>今、ユーザーたちは何につまずいているか</h2>
+      <p class="chapter-desc">まず出発点を整理する。サイトを使う4つの立場から、現状の「痛み」を見る。</p>
+
+      <div class="pain-grid">
+        <div class="pain-card">
+          <div class="who">FDO</div>
+          <p>公募情報・手引きが多すぎて、何から読めばいいかわからない</p>
+        </div>
+        <div class="pain-card">
+          <div class="who">ADO</div>
+          <p>自分に関係あるコンテンツがどこにあるか探しにくい</p>
+        </div>
+        <div class="pain-card">
+          <div class="who">未ログイン一般</div>
+          <p>制度の全体像がつかみにくく、最初のステップが見えない</p>
+        </div>
+        <div class="pain-card">
+          <div class="who">JANPIA管理者</div>
+          <p>コンテンツ更新・ユーザー対応の運用負荷が日々積み重なっている</p>
+        </div>
+      </div>
+
+      <div class="philosophy">
+        <div class="philosophy-quote">「AIが人を置き換える」ではなく、<br>「AIが申請・学習・運営の"壁"を低くする」</div>
+        <p>
+          JANPIAの利用者は非営利・社会課題領域の団体が中心で、ITリテラシーの差が大きい。<br>
+          だからこそ<strong>AIが「専門家に相談できる環境」を民主化する</strong>という発想が、このサイトの価値提供として最もフィットする。<br>
+          機能を増やすためではなく、<strong>使う人の時間と自信を守るため</strong>にAIを使う。
+        </p>
+      </div>
+    </div>
+
+    <!-- ロードマップ概観 -->
+    <div class="chapter">
+      <div class="chapter-label">Roadmap Overview</div>
+      <h2>3つのフェーズで、サイトを進化させる</h2>
+      <p class="chapter-desc">今ある資産を最大限に活かしながら、段階的にプラットフォームへと育てていく。</p>
+
+      <div class="timeline">
+        <div class="tl-item short">
+          <div class="tl-label">Phase 1 — 6〜12ヶ月</div>
+          <div class="tl-text">今の資産を活かした改善</div>
+          <div class="tl-sub">FAQチャットボット・スマート通知・マイページ改善</div>
+        </div>
+        <div class="tl-item mid">
+          <div class="tl-label">Phase 2 — 1〜2年</div>
+          <div class="tl-text">新しい体験をつくる</div>
+          <div class="tl-sub">AI申請書コーチ・FDO×ADOマッチング・社会課題ダッシュボード</div>
+        </div>
+        <div class="tl-item long">
+          <div class="tl-label">Phase 3 — 2〜3年</div>
+          <div class="tl-text">プラットフォームへの進化</div>
+          <div class="tl-sub">学習パーソナライズ・事業報告アシスト・対話型制度ガイド</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 1 -->
+    <div class="chapter">
+      <div class="chapter-label">Chapter 1</div>
+      <h2>短期フェーズ（6〜12ヶ月）</h2>
+      <p class="chapter-desc">新しい仕組みを作る前に、すでにサイトにある資産をもっとうまく使う。小さく始めて、早く効果を出す。</p>
+
+      <div class="phase-badge-row">
+        <div class="phase-pill short"><span class="dot"></span>6〜12ヶ月</div>
+        <div>
+          <div class="phase-title">今の資産を活かした改善</div>
+          <div class="phase-tagline">既存データ・ロジックの組み合わせで、早期に価値を出す</div>
+        </div>
+      </div>
+
+      <div class="feature-cards">
+
+        <div class="fcard">
+          <div class="fcard-top">
+            <div>
+              <div class="fcard-num">1-1</div>
+              <h3>AI搭載 FAQチャットボット</h3>
+            </div>
+          </div>
+          <div class="fcard-body">
+            <p class="fcard-summary">
+              「休眠預金って何ですか？」「申請の締切はいつですか？」——よくある質問に、24時間いつでも答えてくれるチャット窓口。
+              すでに蓄積されたFAQデータをそのままAIのナレッジとして活用するため、新たなデータ収集は不要。
+              よく見られているFAQが自動的に優先学習される<strong>循環設計</strong>がポイント。
+            </p>
+            <div class="fcard-tags">
+              <div class="tag"><strong>対象</strong>未ログイン一般、制度初心者のADO</div>
+              <div class="tag"><strong>活用資産</strong>FAQデータ、Beacon閲覧ログ</div>
+            </div>
+            <div class="fcard-detail">
+              <div class="label">技術方針</div>
+              Claude API（RAG構成）＋ Beacon APIで収集済みのFAQ閲覧ログを掛け合わせる
+            </div>
+          </div>
+          <div class="fcard-footer">
+            <span class="diff-stars">★★<span class="dim">☆</span></span>
+            <span class="diff-chip diff-mid">難易度：中</span>
+            <span class="diff-text">既存リソースをそのまま活用できる</span>
+          </div>
+        </div>
+
+        <div class="fcard">
+          <div class="fcard-top">
+            <div>
+              <div class="fcard-num">1-2</div>
+              <h3>マイページの「次のアクション」提示</h3>
+            </div>
+          </div>
+          <div class="fcard-body">
+            <p class="fcard-summary">
+              ログインしたFDO・ADO担当者に「まだ読んでいない手引きがあります」「申請期限まで2週間です」と自動で教える機能。
+              現状は自分で探しにいく必要があるが、<strong>サイトが先回りして案内する</strong>体験に変わる。
+              AI推論は不要で、既存ロジックの組み合わせで実現できる。
+            </p>
+            <div class="fcard-tags">
+              <div class="tag"><strong>対象</strong>FDO・ADO</div>
+              <div class="tag"><strong>活用資産</strong>ReadModel、公募ステータス判定ロジック</div>
+            </div>
+          </div>
+          <div class="fcard-footer">
+            <span class="diff-stars">★<span class="dim">☆☆</span></span>
+            <span class="diff-chip diff-low">難易度：低</span>
+            <span class="diff-text">AIなし、既存ロジックの再構成のみ</span>
+          </div>
+        </div>
+
+        <div class="fcard">
+          <div class="fcard-top">
+            <div>
+              <div class="fcard-num">1-3</div>
+              <h3>スマート通知（お気に入り × AI要約）</h3>
+            </div>
+          </div>
+          <div class="fcard-body">
+            <p class="fcard-summary">
+              登録カテゴリに新着があったとき、AIが3行で要約して通知する。
+              「新着5件あります」ではなく、「今月の公募は昨年比で対象地域が拡大しています」という<strong>文脈付きの通知</strong>に変わる。
+              情報収集に時間を取れない担当者のための機能。
+            </p>
+            <div class="fcard-tags">
+              <div class="tag"><strong>対象</strong>FDO担当者</div>
+              <div class="tag"><strong>活用資産</strong>既存の通知機能</div>
+            </div>
+            <div class="fcard-detail">
+              <div class="label">技術方針</div>
+              既存のお気に入り通知フローに Claude API の要約呼び出しを組み込む
+            </div>
+          </div>
+          <div class="fcard-footer">
+            <span class="diff-stars">★<span class="dim">☆☆</span></span>
+            <span class="diff-chip diff-low">難易度：低</span>
+            <span class="diff-text">Claude APIの呼び出し追加のみ</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Phase 2 -->
+    <div class="chapter">
+      <div class="chapter-label">Chapter 2</div>
+      <h2>中期フェーズ（1〜2年）</h2>
+      <p class="chapter-desc">このサイトにしかない体験をつくる。「便利なサイト」から「なくてはならないサイト」へ。</p>
+
+      <div class="phase-badge-row">
+        <div class="phase-pill mid"><span class="dot"></span>1〜2年</div>
+        <div>
+          <div class="phase-title">新しい体験をつくる</div>
+          <div class="phase-tagline">競合サービスにはない、JANPIAインフラサイト固有の価値を構築する</div>
+        </div>
+      </div>
+
+      <div class="feature-cards">
+
+        <div class="fcard featured">
+          <div class="fcard-top">
+            <div>
+              <div class="fcard-num">2-1</div>
+              <h3>AI申請書コーチ</h3>
+            </div>
+            <span class="featured-badge">最大インパクト</span>
+          </div>
+          <div class="fcard-body">
+            <p class="fcard-summary">
+              申請書を書く作業は、現状ほぼ完全に「申請者の一人作業」だ。経験がなければ何を書けばいいかわからず、審査側も書き方のばらつきに悩む。
+              AIが公募の採択基準を読み込み、「<em>この基準に対して、あなたの事業計画のここをもっと具体化しましょう</em>」とリアルタイムでコーチングする。
+              <strong>申請者を鍛えるのではなく、申請のハードルを下げる。</strong>
+            </p>
+            <div class="fcard-tags">
+              <div class="tag"><strong>対象</strong>申請経験が少ないADO</div>
+              <div class="tag"><strong>副次効果</strong>JANPIAの審査品質の標準化</div>
+              <div class="tag"><strong>活用資産</strong>公募ACFフィールド（審査基準・目的）</div>
+            </div>
+            <div class="fcard-detail">
+              <div class="label">具体的なUX</div>
+              「この公募の採択基準はこれです。あなたの事業計画のこの部分を具体化しましょう」「過去の採択事例との類似度はXX点です」
+            </div>
+          </div>
+          <div class="fcard-footer">
+            <span class="diff-stars">★★★</span>
+            <span class="diff-chip diff-high">難易度：高</span>
+            <span class="diff-text">公募データとAIコンテキスト設計が鍵</span>
+          </div>
+        </div>
+
+        <div class="fcard">
+          <div class="fcard-top">
+            <div>
+              <div class="fcard-num">2-2</div>
+              <h3>FDO × ADO マッチングプラットフォーム</h3>
+            </div>
+          </div>
+          <div class="fcard-body">
+            <p class="fcard-summary">
+              「子どもの貧困を解決したいADO」と「教育分野の支援に強いFDO」をつなぐ機能。
+              現状は公募と応募という一方向の関係だが、<strong>テーマや地域で双方向につながれる場</strong>に変わる。
+              AIが活動テーマの類似度を計算し、候補を自動提案する。
+            </p>
+            <div class="fcard-tags">
+              <div class="tag"><strong>対象</strong>新規参入のADO、良い団体を探したいFDO</div>
+            </div>
+            <div class="fcard-detail">
+              <div class="label">技術方針</div>
+              団体プロフィール ＋ 埋め込みベクトルによる活動テーマの類似度マッチング
+            </div>
+          </div>
+          <div class="fcard-footer">
+            <span class="diff-stars">★★★</span>
+            <span class="diff-chip diff-high">難易度：高</span>
+            <span class="diff-text">新規DB設計・団体プロフィールUIが必要</span>
+          </div>
+        </div>
+
+        <div class="fcard">
+          <div class="fcard-top">
+            <div>
+              <div class="fcard-num">2-3</div>
+              <h3>社会課題ダッシュボード</h3>
+            </div>
+          </div>
+          <div class="fcard-body">
+            <p class="fcard-summary">
+              「休眠預金はどんな課題を解決してきたのか」を、地図とグラフでインタラクティブに見せる。
+              採択数・支援額・地域分布を可視化することで、一般市民や政策関係者が制度の価値を実感できる。
+              <strong>透明性が信頼を生む。</strong>
+            </p>
+            <div class="fcard-tags">
+              <div class="tag"><strong>対象</strong>一般市民、政策関係者</div>
+              <div class="tag"><strong>活用資産</strong>採択データ、WordPress REST API</div>
+            </div>
+          </div>
+          <div class="fcard-footer">
+            <span class="diff-stars">★★<span class="dim">☆</span></span>
+            <span class="diff-chip diff-mid">難易度：中</span>
+            <span class="diff-text">D3.js等で可視化、既存データを集計活用</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Phase 3 -->
+    <div class="chapter">
+      <div class="chapter-label">Chapter 3</div>
+      <h2>長期フェーズ（2〜3年）</h2>
+      <p class="chapter-desc">サイトを超えて、休眠預金エコシステム全体のインフラになる。申請から報告まで、一貫して伴走する。</p>
+
+      <div class="phase-badge-row">
+        <div class="phase-pill long"><span class="dot"></span>2〜3年</div>
+        <div>
+          <div class="phase-title">プラットフォームへの進化</div>
+          <div class="phase-tagline">申請の前から採択後まで、ライフサイクル全体を支える</div>
+        </div>
+      </div>
+
+      <div class="feature-cards">
+
+        <div class="fcard">
+          <div class="fcard-top">
+            <div>
+              <div class="fcard-num">3-1</div>
+              <h3>学習コンテンツのAIパーソナライズ</h3>
+            </div>
+          </div>
+          <div class="fcard-body">
+            <p class="fcard-summary">
+              FDOの担当者は定期的に入れ替わる。新担者が毎回「どこから学べばいい？」と迷う現状を変える。
+              既読履歴と習熟度スコアを元にAIが最適な学習ルートを提案。
+              「<em>あなたの段階ならここから始めましょう</em>」と、個人に合わせたロードマップを自動生成する。
+            </p>
+            <div class="fcard-tags">
+              <div class="tag"><strong>対象</strong>FDO担当者（特に引き継ぎ直後）</div>
+              <div class="tag"><strong>活用資産</strong>ReadModel、FdoRoadmap</div>
+            </div>
+          </div>
+          <div class="fcard-footer">
+            <span class="diff-stars">★★<span class="dim">☆</span></span>
+            <span class="diff-chip diff-mid">難易度：中</span>
+          </div>
+        </div>
+
+        <div class="fcard">
+          <div class="fcard-top">
+            <div>
+              <div class="fcard-num">3-2</div>
+              <h3>事業報告AIアシスト</h3>
+            </div>
+          </div>
+          <div class="fcard-body">
+            <p class="fcard-summary">
+              採択が終わった後の報告書作成も、実は大きな負担だ。
+              申請時の事業計画データと実績入力を組み合わせて、AIが報告書の下書きを自動生成。
+              ADOの業務負荷を軽減しながら、JANPIA側も<strong>報告品質の標準化</strong>が実現する。
+            </p>
+            <div class="fcard-tags">
+              <div class="tag"><strong>対象</strong>採択後のADO</div>
+              <div class="tag"><strong>副次効果</strong>JANPIA審査の効率化</div>
+            </div>
+            <div class="fcard-detail">
+              <div class="label">技術方針</div>
+              申請時の事業計画データ × 実績入力フォーム → Claude APIでドラフト生成
+            </div>
+          </div>
+          <div class="fcard-footer">
+            <span class="diff-stars">★★★</span>
+            <span class="diff-chip diff-high">難易度：高</span>
+            <span class="diff-text">報告フォームの新規開発が必要</span>
+          </div>
+        </div>
+
+        <div class="fcard">
+          <div class="fcard-top">
+            <div>
+              <div class="fcard-num">3-3</div>
+              <h3>対話型制度説明（インタラクティブガイド）</h3>
+            </div>
+          </div>
+          <div class="fcard-body">
+            <p class="fcard-summary">
+              「休眠預金を使いたいが、自分はどのポジションで何をすればいいのかわからない」という初訪問者に向けた機能。
+              「あなたはどんな課題を解決したいですか？」と問答形式で進むと、自分のポジションと次のステップが自然にわかる。
+              <strong>テキストで説明するのではなく、会話で理解させる。</strong>
+            </p>
+            <div class="fcard-tags">
+              <div class="tag"><strong>対象</strong>未ログインの制度初心者</div>
+            </div>
+          </div>
+          <div class="fcard-footer">
+            <span class="diff-stars">★★<span class="dim">☆</span></span>
+            <span class="diff-chip diff-mid">難易度：中</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Chapter 4: サマリー -->
+    <div class="chapter">
+      <div class="chapter-label">Chapter 4</div>
+      <h2>技術難易度サマリー</h2>
+      <p class="chapter-desc">全機能を難易度と既存資産の観点から一覧にする。</p>
+
+      <div class="summary-wrap">
+        <table class="summary-table">
+          <thead>
+            <tr>
+              <th>機能</th>
+              <th>難易度</th>
+              <th>既存資産の活用</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>マイページ次のアクション</td>
+              <td><span class="diff-stars">★<span class="dim">☆☆</span></span> <span class="diff-chip diff-low">低</span></td>
+              <td>ReadModel、公募ステータスロジック</td>
+            </tr>
+            <tr>
+              <td>スマート通知＋AI要約</td>
+              <td><span class="diff-stars">★<span class="dim">☆☆</span></span> <span class="diff-chip diff-low">低</span></td>
+              <td>通知機能、Claude API呼び出し追加のみ</td>
+            </tr>
+            <tr>
+              <td>FAQチャットボット</td>
+              <td><span class="diff-stars">★★<span class="dim">☆</span></span> <span class="diff-chip diff-mid">中</span></td>
+              <td>FAQデータ、Beacon閲覧ログ</td>
+            </tr>
+            <tr>
+              <td>社会課題ダッシュボード</td>
+              <td><span class="diff-stars">★★<span class="dim">☆</span></span> <span class="diff-chip diff-mid">中</span></td>
+              <td>採択データ、WordPress REST API</td>
+            </tr>
+            <tr>
+              <td>学習コンテンツ パーソナライズ</td>
+              <td><span class="diff-stars">★★<span class="dim">☆</span></span> <span class="diff-chip diff-mid">中</span></td>
+              <td>ReadModel、FdoRoadmap</td>
+            </tr>
+            <tr>
+              <td>対話型制度説明ガイド</td>
+              <td><span class="diff-stars">★★<span class="dim">☆</span></span> <span class="diff-chip diff-mid">中</span></td>
+              <td>制度説明コンテンツ</td>
+            </tr>
+            <tr>
+              <td>AI申請書コーチ</td>
+              <td><span class="diff-stars">★★★</span> <span class="diff-chip diff-high">高</span></td>
+              <td>公募ACFフィールド、学習コンテンツ</td>
+            </tr>
+            <tr>
+              <td>FDO × ADOマッチング</td>
+              <td><span class="diff-stars">★★★</span> <span class="diff-chip diff-high">高</span></td>
+              <td>新規DB設計が必要</td>
+            </tr>
+            <tr>
+              <td>事業報告AIアシスト</td>
+              <td><span class="diff-stars">★★★</span> <span class="diff-chip diff-high">高</span></td>
+              <td>申請データ、報告フォーム新規開発</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Chapter 5: 推奨スタート -->
+    <div class="chapter">
+      <div class="chapter-label">Chapter 5</div>
+      <h2>まず、ここから始める</h2>
+      <p class="chapter-desc">9つの機能のうち、最初の一手を絞り込む。</p>
+
+      <div class="rec-box">
+        <div class="rec-eyebrow">Recommended First Step</div>
+        <h3>AI搭載FAQチャットボットを<br>最初のPoC対象にする</h3>
+        <ul class="rec-list">
+          <li>既存FAQデータがそのまま使える。新規データ収集は不要</li>
+          <li>効果測定が明快。FAQ閲覧数・問い合わせ件数の変化で成否を判断できる</li>
+          <li>JANPIAとして対外的に「AI活用」のメッセージを早期に出せる</li>
+          <li>RAG構成は実績多数。技術的なリスクが低く、失敗コストが小さい</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="doc-footer">
+      このドキュメントはJANPIAインフラサイトの機能拡張・AI活用方針の検討たたき台です。<br>
+      具体的な要件定義・技術PoC方針は別途ドキュメントとして作成する。<br><br>
+      © 2026 スパイスファクトリー株式会社
+    </div>
+
+  </div>
+</body>
+</html>

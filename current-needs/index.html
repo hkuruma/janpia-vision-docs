@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script src="../assets/gate.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JANPIA の現状課題・やりたいこと整理</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #1a1a2e;
+    background: #f5f6fa;
+  }
+
+  .wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ヘッダー */
+  .doc-header {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 32px 36px;
+    border-radius: 12px;
+    margin-bottom: 32px;
+  }
+
+  .doc-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px 24px;
+    font-size: 12px;
+    color: #b0b8d0;
+  }
+
+  .meta-grid span { color: #ffffff; }
+
+  .notice {
+    margin-top: 16px;
+    padding: 10px 14px;
+    background: rgba(255, 196, 0, 0.15);
+    border-left: 3px solid #ffc400;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #ffe080;
+  }
+
+  /* セクション */
+  .section {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+
+  h2 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a1a2e;
+    border-left: 4px solid #2563eb;
+    padding-left: 12px;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 24px 0 6px;
+    padding-top: 8px;
+    border-top: 1px solid #e8eaf0;
+  }
+
+  h3:first-of-type { border-top: none; margin-top: 0; }
+
+  .map-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+    border-radius: 20px;
+    padding: 2px 10px;
+    margin-bottom: 12px;
+  }
+
+  /* テーブル */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+
+  th {
+    background: #f0f4ff;
+    color: #2563eb;
+    font-weight: 600;
+    text-align: left;
+    padding: 8px 12px;
+    border: 1px solid #dde3f0;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 8px 12px;
+    border: 1px solid #e8eaf0;
+    vertical-align: top;
+    line-height: 1.6;
+  }
+
+  tr:nth-child(even) td { background: #fafbff; }
+  tr:hover td { background: #f0f4ff; }
+
+  td strong { color: #1a1a2e; }
+
+  .em-num {
+    font-weight: 700;
+    color: #dc2626;
+  }
+
+  /* リスト */
+  ul {
+    list-style: none;
+    margin: 10px 0;
+    padding: 0;
+  }
+
+  ul li {
+    padding: 4px 0 4px 20px;
+    position: relative;
+    font-size: 13px;
+    border-bottom: 1px solid #f0f2f8;
+  }
+
+  ul li:last-child { border-bottom: none; }
+
+  ul li::before {
+    content: "·";
+    position: absolute;
+    left: 6px;
+    color: #94a3b8;
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  /* 仮説バッジ */
+  .hypothesis {
+    padding: 6px 12px 6px 36px;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 6px;
+    margin: 6px 0;
+    font-size: 13px;
+    color: #78350f;
+    position: relative;
+  }
+
+  .hypothesis::before {
+    content: "⚠️";
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    font-size: 13px;
+  }
+
+  /* 引用 */
+  blockquote {
+    border-left: 4px solid #2563eb;
+    padding: 10px 16px;
+    background: #eff6ff;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    color: #1e3a8a;
+  }
+
+  blockquote strong { color: #1e3a8a; }
+
+  /* ポイントボックス */
+  .point-box {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #14532d;
+    margin: 10px 0;
+  }
+
+  .point-box strong { color: #166534; }
+
+  /* フッター */
+  .doc-footer {
+    text-align: center;
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 40px;
+  }
+
+  /* デジタル戦略マップ画像 */
+  .map-image {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #e8eaf0;
+    margin: 16px 0;
+  }
+
+  /* セクション見出し番号バッジ */
+  .section-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    background: #2563eb;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 700;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+
+  h2 { display: flex; align-items: center; }
+
+  /* 重要セル */
+  .cell-highlight { background: #eff6ff !important; font-weight: 600; color: #1e3a8a; }
+  .cell-empty { color: #cbd5e1; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- ヘッダー -->
+  <div class="doc-header">
+    <h1>JANPIA の現状課題・やりたいこと整理</h1>
+    <div class="meta-grid">
+      <div>作成日：<span>2026-06-18</span></div>
+      <div>作成：<span>スパイスファクトリー株式会社</span></div>
+      <div>出典：<span>2026年度事業計画・収支予算のポイント（PDF）、デジタル戦略ロードマップ</span></div>
+      <div>ステータス：<span>社内検討用ドラフト</span></div>
+    </div>
+    <div class="notice">
+      ⚠️ マークは仮説・推測を示す。ヒアリングや提案議論のたたき台として使用すること。
+    </div>
+  </div>
+
+  <!-- デジタル戦略マップ -->
+  <div class="section">
+    <h2><span class="section-num">参</span>デジタル戦略ロードマップ（原図）</h2>
+    <img src="digital-stratgy-map.png" alt="JANPIA業務効率化・デジタル戦略現状と将来に向けて" class="map-image">
+    <p style="font-size:12px; color:#64748b; margin-top:4px;">出典：2026年度事業計画・収支予算のポイント（参考スライド）</p>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="section">
+    <h2><span class="section-num">1</span>JANPIAが今困っていること（課題・痛み）</h2>
+
+    <h3>1-1. 制度の認知・理解が広がらない</h3>
+    <div class="map-tag">マップ対応：一般向け対応 ＞ コーポレートIT デジタライゼーション</div>
+    <table>
+      <tr><th>指標</th><th>数値</th></tr>
+      <tr><td>制度を「内容まで知っている」割合</td><td class="em-num">全体の19%</td></tr>
+      <tr><td>若年層のシンボルマーク認知</td><td>高め（ただし制度理解には至っていない）</td></tr>
+    </table>
+    <ul>
+      <li>知っているが「よくわからない」まま止まっている層が多い</li>
+      <li>制度の複雑さがFDO・ADO以外への浸透を妨げている</li>
+    </ul>
+    <div class="hypothesis">仮説：「一般向け対応」にRAG・LLMを入れようとしているのは、問い合わせ対応コストの削減だけでなく、「制度を知っているが理解できていない」層を自己解決させることが目的ではないか</div>
+
+    <h3>1-2. 採択率が低く、申請品質に課題がある</h3>
+    <div class="map-tag">マップ対応：PO・申請支援 ＞ ビジネスIT DX（体験型支援プラットフォーム）</div>
+    <table>
+      <tr><th>指標</th><th>数値</th></tr>
+      <tr><td>2025年度 申請件数</td><td>127件</td></tr>
+      <tr><td>2025年度 採択件数</td><td>23件</td></tr>
+      <tr><td>採択率</td><td class="em-num">約18%</td></tr>
+    </table>
+    <ul>
+      <li>申請書の質が低い（課題設定・事業設計が弱い）ケースが多い</li>
+      <li>FDO・ADOの申請支援力にばらつきがある</li>
+    </ul>
+    <div class="hypothesis">仮説：JANPIA事務局がPO不在の地域の申請を「代わりに見てあげる」ことで人的リソースが圧迫されている。それを「体験型支援プラットフォーム」でデジタル代替しようとしている可能性がある</div>
+
+    <h3>1-3. PO人材の不足・地域偏在</h3>
+    <div class="map-tag">マップ対応：PO・申請支援 ＞ ビジネスIT DX（PO人材データベース化）</div>
+    <ul>
+      <li>経験豊富なPOのノウハウが属人化・共有されていない</li>
+      <li><strong>空白県が16県</strong>存在し、地域格差が生じている</li>
+    </ul>
+    <div class="hypothesis">仮説：優秀なPOは首都圏・大都市圏の特定FDOに集中しており、地方の団体が不利になる構造がある。JANPIAはこれを「見える化・マッチング」で解消しようとしている</div>
+    <div class="hypothesis">仮説：POのノウハウをRAGに学習させることで「バーチャルPO」として機能させることを意識している可能性がある（ナレッジページ＋RAGがその布石）</div>
+
+    <h3>1-4. 事務局の運営負荷が高い</h3>
+    <div class="map-tag">マップ対応：一般向け対応／PO・申請支援／情報公開 ＞ コーポレートIT デジタライゼーション</div>
+    <ul>
+      <li>FDO・ADO・一般からの問い合わせ対応に人的リソースを消費</li>
+      <li>事業報告書の品質がばらつき、審査・管理コストがかかる</li>
+      <li>情報公開・コンテンツ更新の運用負荷が継続的に発生</li>
+    </ul>
+    <div class="hypothesis">仮説：事務局スタッフ一人当たりの対応件数が限界に近づいており、AI導入は「やりたいこと」ではなく「やらないと回らない」状態の可能性がある</div>
+    <div class="hypothesis">仮説：「情報公開データ基準の自動化」（マップ：情報公開 ＞ コーポレートIT）は、手動でのコンテンツ更新・公開作業が工数を圧迫していることへの対処</div>
+
+    <h3>1-5. デジタル化が内部効率化に偏っていた（ビジネスDXが遅れ）</h3>
+    <div class="map-tag">マップ対応：全行 ＞ ビジネスIT DX（空欄・未着手が多い列）</div>
+    <ul>
+      <li>会計・人事・電子契約・ゼロトラストなど<strong>コーポレートIT（内部効率化）は進行中</strong></li>
+      <li>対外サービス・FDO/ADO向けプラットフォーム（<strong>ビジネスIT DX</strong>）はこれから</li>
+    </ul>
+    <div class="hypothesis">仮説：内部IT整備が一段落したため、2026年度から「外向け（FDO/ADO体験）」にリソースシフトするフェーズに入ったと見られる</div>
+    <div class="hypothesis">仮説：マップ上で「ビジネスIT DX」欄が少ないのは設計未完成であり、JANPIA自身も「何を作るか」が固まっていない可能性がある。ここにSPICEが先行案を出す余地がある</div>
+
+    <h3>1-6. 担当者の属人化</h3>
+    <div class="map-tag">マップ対応：組織・文化 ＞ コーポレートIT DX</div>
+    <ul>
+      <li>JANPIA内部で担当者ごとに知識量・対応品質に差がある</li>
+      <li>「この人に聞けばわかる」という状態が固定化しており、特定スタッフへの依存が生じている</li>
+    </ul>
+    <div class="hypothesis">仮説：ナレッジページ（RAG）を「外向け」だけでなく「内向き（事務局内の知識共有）」にも活用したいという動機がある可能性</div>
+
+    <h3>1-7. データのサイロ化</h3>
+    <div class="map-tag">マップ対応：助成手続き／公募・公募審査／PO・申請支援 の横断</div>
+    <ul>
+      <li>助成金管理・申請審査・受講管理・CRMが別システムで存在し、統合されていない</li>
+    </ul>
+    <div class="hypothesis">仮説：「このADOが今どの支援ステージにいるか」を横断的に把握できておらず、担当者が手動で突き合わせている</div>
+    <div class="hypothesis">仮説：CRM構築（+15百万円の一部）は単なる連絡先管理ではなく、この分断を解消するための「縦串」として設計されている可能性がある</div>
+
+    <h3>1-8. ADOの再申請率が低い</h3>
+    <div class="map-tag">マップ対応：PO・申請支援 ＞ ビジネスIT DX</div>
+    <ul>
+      <li>一度採択されたADOが次の公募に戻ってこない可能性がある</li>
+      <li>「採択→事業完了→次の申請」という循環が設計されていない</li>
+    </ul>
+    <div class="hypothesis">仮説：採択後のフォロー（事業報告AIアシスト）と次の申請促進をつなぐ設計が、体験型支援プラットフォームの隠れた目的のひとつではないか</div>
+
+    <h3>1-9. 255事業・396.9億円の成果が社会に届いていない</h3>
+    <div class="map-tag">マップ対応：情報公開 ＞ ビジネスIT DX（空白）</div>
+    <ul>
+      <li>累計実績が大きいにもかかわらず、一般社会への認知が低い水準にとどまっている</li>
+    </ul>
+    <div class="hypothesis">仮説：社会課題構造化マップや採択事例の可視化が「情報公開」ではなく「社会への説明責任・信頼構築」として位置づけられており、マップ上の「情報公開 ＞ ビジネスIT DX」が空白なのは手が回っていないだけで本来は優先課題のはず</div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="section">
+    <h2><span class="section-num">2</span>JANPIAが2026年度にやりたいこと（公式方針）</h2>
+
+    <h3>カテゴリ別ロードマップ（マップより）</h3>
+    <table>
+      <tr>
+        <th>業務領域（マップ行）</th>
+        <th>コーポレートIT<br>デジタライゼーション</th>
+        <th>コーポレートIT DX</th>
+        <th>ビジネスIT DX</th>
+      </tr>
+      <tr>
+        <td><strong>助成手続き</strong></td>
+        <td>助成金管理システム</td>
+        <td>柔軟なデータ基盤整備</td>
+        <td class="cell-empty">—</td>
+      </tr>
+      <tr>
+        <td><strong>公募・公募審査</strong></td>
+        <td>申請・審査管理システム</td>
+        <td>CRM/RAG連携</td>
+        <td class="cell-empty">—</td>
+      </tr>
+      <tr>
+        <td><strong>PO・申請支援</strong></td>
+        <td>RAG・LLMサービス導入</td>
+        <td>CRM/RAG連携</td>
+        <td class="cell-highlight">体験型支援プラットフォーム（AI連携）</td>
+      </tr>
+      <tr>
+        <td><strong>研修</strong></td>
+        <td>受講管理システム</td>
+        <td class="cell-empty">—</td>
+        <td>ブレンディッドラーニング</td>
+      </tr>
+      <tr>
+        <td><strong>情報公開</strong></td>
+        <td>情報公開データ基準（自動化）</td>
+        <td class="cell-empty">—</td>
+        <td class="cell-empty">—</td>
+      </tr>
+      <tr>
+        <td><strong>一般向け対応</strong></td>
+        <td>RAG・LLMサービス導入</td>
+        <td>CRM/RAG連携</td>
+        <td class="cell-empty">—</td>
+      </tr>
+      <tr>
+        <td><strong>財務・会計</strong></td>
+        <td>会計システムリプレース</td>
+        <td class="cell-empty">—</td>
+        <td class="cell-empty">—</td>
+      </tr>
+      <tr>
+        <td><strong>人事・労務</strong></td>
+        <td>人事システム導入</td>
+        <td class="cell-empty">—</td>
+        <td class="cell-empty">—</td>
+      </tr>
+      <tr>
+        <td><strong>組織・文化</strong></td>
+        <td>電子契約サービス導入</td>
+        <td class="cell-empty">—</td>
+        <td class="cell-empty">—</td>
+      </tr>
+      <tr>
+        <td><strong>DX文化・ガバナンス</strong></td>
+        <td>ゼロトラスト対応（IAM/MDM）</td>
+        <td class="cell-empty">—</td>
+        <td class="cell-empty">—</td>
+      </tr>
+      <tr>
+        <td><strong>セキュリティ</strong></td>
+        <td class="cell-empty">—</td>
+        <td>SIEM等</td>
+        <td class="cell-empty">—</td>
+      </tr>
+    </table>
+    <div class="point-box"><strong>ポイント：</strong>コーポレートIT側は多くの項目が進行中〜完了。ビジネスIT DX（対外プラットフォーム）は「PO・申請支援」の体験型支援プラットフォームだけが明示されており、他は空白。</div>
+
+    <h3>2026年度の最重点取組（重点④：AI導入）</h3>
+    <table>
+      <tr>
+        <th>取組</th>
+        <th>概要</th>
+        <th>マップ対応行</th>
+        <th>予算・根拠</th>
+      </tr>
+      <tr>
+        <td><strong>AI連動型ナレッジページ</strong></td>
+        <td>約1800採択事業のRAG検索ナレッジ基盤</td>
+        <td>PO・申請支援／一般向け対応</td>
+        <td>+15百万円計上</td>
+      </tr>
+      <tr>
+        <td><strong>申請サポートプログラム（仮称）</strong></td>
+        <td>ワークショップ・事前エントリー正式導入</td>
+        <td>PO・申請支援 ＞ ビジネスIT DX</td>
+        <td>p.3, p.7</td>
+      </tr>
+      <tr>
+        <td><strong>PO人材データベース化</strong></td>
+        <td>PO人材マッチング基盤</td>
+        <td>PO・申請支援 ＞ ビジネスIT DX</td>
+        <td>p.11</td>
+      </tr>
+      <tr>
+        <td><strong>社会課題構造化マップ拡充</strong></td>
+        <td>既存マップを他課題に展開</td>
+        <td>情報公開</td>
+        <td>p.7</td>
+      </tr>
+      <tr>
+        <td><strong>ブレンディッドラーニング</strong></td>
+        <td>受講管理＋オンライン×対面研修</td>
+        <td>研修 ＞ ビジネスIT DX</td>
+        <td>p.11</td>
+      </tr>
+      <tr>
+        <td><strong>事業報告の標準化・AIアシスト</strong></td>
+        <td>報告書標準化・AI支援</td>
+        <td>PO・申請支援</td>
+        <td>p.3</td>
+      </tr>
+      <tr>
+        <td><strong>CRM構築</strong></td>
+        <td>FDO・ADO関係管理</td>
+        <td>公募・公募審査・一般向け対応</td>
+        <td>+15百万円の一部</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="section">
+    <h2><span class="section-num">3</span>JANPIAが目指す将来像（ビジネスDXの核心）</h2>
+    <div class="map-tag">マップ対応：PO・申請支援 ＞ ビジネスIT DX</div>
+    <blockquote>
+      <strong>「休眠預金活用プラットフォーム（休プラ）」＝ヒト・モノ・情報等が循環する休眠預金等活用事業の"ハブ"</strong>
+    </blockquote>
+    <p style="margin:10px 0; font-size:13px;">2025年度に開発・運用が開始済み。PO研修の受講管理などに活用されているほか、将来的には「PO人材を求める資金分配団体と人材をつなぐプラットフォーム」としての活用方針も検討されている（出典：2026_jigyo_keikaku_syushiyosan_point.pdf p.11-12）。</p>
+    <div class="hypothesis">⚠️ 訂正：旧版では「セミ・セレ・事業報告を支援するAI連携システム（体験型支援プラットフォーム）」という記載があったが、原典PDFを全文検索した結果「セレ」という語自体が存在せず、事実に基づかない誤った引用だったため削除した。</div>
+    <div class="hypothesis">仮説：JANPIAは休プラの「絵」は描けているが、申請〜報告までを一気通貫で支援する機能の具体設計・UX設計・技術選定はまだ固まっていない可能性がある。外部パートナーが設計段階から関われる余地があるかは要ヒアリング。</div>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="section">
+    <h2><span class="section-num">4</span>未解決の問い（ヒアリングで確認したい仮説）</h2>
+    <table>
+      <tr>
+        <th>仮説</th>
+        <th>マップ対応</th>
+        <th>確認ポイント</th>
+      </tr>
+      <tr>
+        <td>⚠️ 事務局のAI推進は「やりたい」ではなく「やらないと回らない」危機感か？</td>
+        <td>全体（コーポレートIT）</td>
+        <td>事務局の現状人員・対応件数</td>
+      </tr>
+      <tr>
+        <td>⚠️ PO・申請支援の「体験型プラットフォーム」の具体設計は未完成か？</td>
+        <td>PO・申請支援 ＞ ビジネスIT DX</td>
+        <td>現状の検討状況・RFPの有無</td>
+      </tr>
+      <tr>
+        <td>⚠️ CRM構築は内部管理用か、FDO/ADOが使うフロントエンドも含むか？</td>
+        <td>公募・公募審査 ＞ コーポレートIT DX</td>
+        <td>CRMのスコープ定義</td>
+      </tr>
+      <tr>
+        <td>⚠️ ナレッジページ（RAG）はインフラサイトとは別システムとして構築するつもりか？</td>
+        <td>PO・申請支援 ＞ デジタライゼーション</td>
+        <td>インフラサイトとの連携想定の有無</td>
+      </tr>
+      <tr>
+        <td>⚠️ ブレンディッドラーニングの受講対象はFDOのみか、ADOも含むか？</td>
+        <td>研修 ＞ ビジネスIT DX</td>
+        <td>ターゲット定義</td>
+      </tr>
+      <tr>
+        <td>⚠️ 空白県16県のPO不足は単なる人材不足か、採択予算規模が小さすぎてFDOが参入しないのか？</td>
+        <td>PO・申請支援 ＞ ビジネスIT DX</td>
+        <td>空白県の詳細分析</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Section 5 -->
+  <div class="section">
+    <h2><span class="section-num">5</span>まとめ：SPICEが入れる余地</h2>
+    <table>
+      <tr>
+        <th>JANPIAの課題・やりたいこと</th>
+        <th>マップ対応</th>
+        <th>SPICEが貢献できること</th>
+      </tr>
+      <tr>
+        <td>AI連動型ナレッジページの開発</td>
+        <td>PO・申請支援 デジタライゼーション</td>
+        <td>インフラサイトFAQチャットボット（RAG）で先行実装・連携</td>
+      </tr>
+      <tr>
+        <td>申請サポートプログラムのデジタル化</td>
+        <td>PO・申請支援 ビジネスDX</td>
+        <td>AI申請書コーチ（採択率18%改善の24時間版）</td>
+      </tr>
+      <tr>
+        <td>PO人材のプラットフォーム化</td>
+        <td>PO・申請支援 ビジネスDX</td>
+        <td>FDO×ADOマッチング機能のUI・システム設計</td>
+      </tr>
+      <tr>
+        <td>受講管理・ブレンディッドラーニング</td>
+        <td>研修 ビジネスDX</td>
+        <td>FdoRoadmap＋ReadModelをJANPIA受講管理と連携</td>
+      </tr>
+      <tr>
+        <td>社会課題構造化マップの拡充</td>
+        <td>情報公開</td>
+        <td>採択データ可視化ダッシュボードとして開発</td>
+      </tr>
+      <tr>
+        <td>ビジネスDX全体の設計</td>
+        <td>ビジネスIT DX（空白が多い）</td>
+        <td><strong>無償ワークショップ</strong>で「空白欄を一緒に埋める」パートナーとして参入</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="doc-footer">
+    本ドキュメントはJANPIAへの提案準備・社内検討用の整理資料です。仮説はヒアリングで検証すること。<br>
+    スパイスファクトリー株式会社 © 2026
+  </div>
+
+</div>
+</body>
+</html>

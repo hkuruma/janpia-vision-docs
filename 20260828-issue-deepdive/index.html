@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script src="../assets/gate.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>資料作り直し方針＆質問項目ブラッシュアップ（たたき台）</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --spice: rgb(255, 218, 0);
+    --spice-bg: #fff9d6;
+    --spice-border: #e6c400;
+    --black: #000000;
+    --ink: #1a1a1a;
+    --muted: #5a5a5a;
+    --border: #e2e2e2;
+    --bg: #fafafa;
+    --white: #ffffff;
+    --sidebar-w: 168px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.85;
+    margin-left: var(--sidebar-w);
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--black);
+    overflow-y: auto;
+    padding: 20px 0 40px;
+    z-index: 100;
+  }
+  .sidebar-title {
+    color: var(--spice);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0 16px 12px;
+    border-bottom: 1px solid #333;
+    margin-bottom: 8px;
+  }
+  .nav-link {
+    display: block;
+    padding: 9px 16px;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 600;
+    border-left: 3px solid transparent;
+    line-height: 1.5;
+  }
+  .nav-link:hover { background: #1a1a1a; color: var(--spice); }
+  .nav-link.active {
+    background: #1a1a1a;
+    color: var(--spice);
+    border-left: 3px solid var(--spice);
+  }
+
+  @media (max-width: 700px) {
+    :root { --sidebar-w: 0px; }
+    .sidebar { display: none; }
+    body { margin-left: 0; }
+  }
+
+  .hero {
+    background: var(--black);
+    color: white;
+    padding: 56px 40px 48px;
+    border-bottom: 6px solid var(--spice);
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--spice);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .hero h1 { font-size: 26px; font-weight: 700; line-height: 1.5; margin-bottom: 18px; }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 10px 24px;
+    font-size: 13px; color: #d9d9d9;
+  }
+  .hero-meta span b { color: #fff; font-weight: 600; }
+  .badge {
+    display: inline-block;
+    background: var(--spice);
+    border: 1px solid var(--spice);
+    color: var(--black);
+    font-weight: 700;
+    font-size: 11.5px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-top: 16px;
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 40px 40px 100px; }
+
+  .note {
+    background: var(--spice-bg);
+    border-left: 4px solid var(--spice-border);
+    padding: 14px 18px;
+    border-radius: 6px;
+    font-size: 13.5px;
+    color: #4a4200;
+    margin-bottom: 36px;
+  }
+
+  .summary-box {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--spice);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 44px;
+  }
+  .summary-box h2 { font-size: 13px; color: var(--black); letter-spacing: 0.05em; margin-bottom: 14px; }
+  .summary-box ul { padding-left: 20px; }
+  .summary-box li { margin-bottom: 10px; }
+  .summary-box li:last-child { margin-bottom: 0; }
+
+  section { margin-bottom: 48px; }
+
+  h2.section-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--black);
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--spice);
+    margin-bottom: 20px;
+  }
+  h3.sub-title {
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--black);
+    margin: 24px 0 10px;
+  }
+
+  p { margin-bottom: 12px; }
+  ul, ol { padding-left: 22px; margin-bottom: 14px; }
+  li { margin-bottom: 8px; }
+
+  .table-wrap { overflow-x: auto; margin: 14px 0 20px; border: 1px solid var(--border); border-radius: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; background: var(--white); }
+  th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: var(--black); color: var(--spice); font-weight: 700; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+
+  .step-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--spice);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+  }
+  .step-card h3 { color: var(--black); font-size: 15px; margin-bottom: 8px; }
+  .step-card ul { margin-bottom: 0; }
+  .step-card p { margin-bottom: 0; color: var(--muted); font-size: 13.5px; }
+
+  .tag-spice, .tag-janpia {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 0.92em;
+    padding: 0 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .tag-spice { background: var(--spice); color: var(--black); }
+  .tag-janpia { background: var(--black); color: var(--spice); }
+
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 8px 20px;
+    align-items: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .legend b { color: var(--ink); font-weight: 600; }
+
+  strong { color: var(--black); }
+
+  .no-tag {
+    display: inline-block;
+    font-size: 0.78em;
+    font-weight: 700;
+    padding: 1px 6px;
+    background: var(--black);
+    color: var(--white);
+    border-radius: 3px;
+    margin-right: 6px;
+    vertical-align: 1px;
+  }
+
+  a { color: var(--black); text-decoration: underline; text-decoration-color: var(--spice); text-decoration-thickness: 2px; }
+
+  footer {
+    max-width: 860px; margin: 0 auto; padding: 0 40px 60px;
+    font-size: 12.5px; color: var(--muted); font-style: italic;
+    border-top: 1px solid var(--border); padding-top: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 40px 20px 36px; }
+    .wrap { padding: 28px 20px 70px; }
+    footer { padding: 0 20px 40px; }
+  }
+
+  @media print {
+    .hero { background: var(--black) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-title">MENU</div>
+  <a href="#s1" class="nav-link" data-sec="1">1. 何が問題だったか</a>
+  <a href="#s2" class="nav-link" data-sec="2">2. 作り直しの構成案</a>
+  <a href="#s3" class="nav-link" data-sec="3">3. やらないこと</a>
+  <a href="#s4" class="nav-link" data-sec="4">4. 質問項目の追加観点</a>
+  <a href="#s5" class="nav-link" data-sec="5">5. NPO向け別リスト</a>
+  <a href="#s6" class="nav-link" data-sec="6">6. 次のアクション</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">社内検討用 &middot; たたき台</div>
+    <h1>資料作り直し方針＆質問項目ブラッシュアップ</h1>
+    <div class="hero-meta">
+      <span><b>作成日</b> 2026-08-28</span>
+      <span><b>作成</b> スパイスファクトリー株式会社</span>
+      <span><b>ステータス</b> ドラフト（社内検討用）</span>
+    </div>
+    <div class="badge">2026-08-06社内MTGのFBを受けた、資料の作り直し方針と質問項目の残タスク整理</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="note">
+    <strong>本資料はSPICE（スパイスファクトリー）社内検討用のたたき台であり、JANPIAへの提示内容は未確定です。</strong><br>
+    2026-08-06社内MTGにて、<a href="../5to10year-vision/">5to10year-vision</a>（5〜10年後構想・4軸仮説）が「案件案件って感じ」と評価され、このままでは先方に持ち込めないと判断。残タスクである①資料の作り直し方針、②質問項目のブラッシュアップを整理したもの。
+  </div>
+
+  <div class="legend">
+    <span><span class="tag-spice">スパイス</span> <b>SPICE</b>（スパイスファクトリー）：車さん・松本さん・品田さん・流郷さん</span>
+  </div>
+
+  <div class="summary-box">
+    <h2>結論</h2>
+    <ul>
+      <li>現行資料は<strong>SPICEが売りたい絵（OS/プラットフォーム比喩、4軸の「仮の目標」）が先行</strong>しており、JANPIA自身の課題理解が浅いまま組み立てられている。</li>
+      <li>作り直しの軸は1つ：<strong>「SPICEが何を提供できるか」から始めるのをやめ、「JANPIAが何に困っているか／本当に困っているのか」から始める</strong>。4軸の目標仮説は資料の主役から外し、検証されるまで登場させない。</li>
+      <li>質問項目は骨格（6テーマ）は使えるが、<strong>「発生条件を聞く」「解決の選択肢の中にSPICEができることがあるか確認する」という2ステップが抜けている</strong>（流郷さんの提案プロセス）。</li>
+      <li>これはJANPIA本体向けの質問であり、<strong>NPO／実行団体ヒアリング用の別リストが未着手</strong>だったため、新規に整理した。</li>
+    </ul>
+  </div>
+
+  <section id="s1">
+    <h2 class="section-title">1. 資料作り直し方針｜何が問題だったか</h2>
+    <div class="table-wrap">
+      <table>
+        <tr><th>現行資料の要素</th><th>問題</th></tr>
+        <tr><td>「JANPIA＝プラットフォーム／SPICE＝OS」の比喩（0章）</td><td>SPICEの立ち位置を既定路線として描いており、営業提案に見える</td></tr>
+        <tr><td>4つの軸（認知／支援の形／エコシステム／データ）を「ありたい姿」として提示（3章）</td><td>JANPIA自身が課題だと認識しているかの検証前に、SPICEが目標を設定している</td></tr>
+        <tr><td>時間軸シナリオ・サイトの役割進化（4〜5章）</td><td>4軸の仮説を前提にした未来像で、土台が未検証のまま積み上がっている</td></tr>
+        <tr><td>未検証の仮説・次のアクションが「資料をどう見せるか」中心（6〜8章）</td><td>課題の中身より進め方の話に寄っている</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="s2">
+    <h2 class="section-title">2. 作り直しの構成案</h2>
+    <p>SPICEの提供価値・4軸の仮の目標は資料から一旦外し、以下の構成に置き換える。</p>
+
+    <div class="step-card">
+      <h3><span class="no-tag">1</span>JANPIAの現在地（事実ベース）</h3>
+      <p>現行の2章相当（実際の開発状況／公式資料の事実）はそのまま活かす。ここは事実なので資料の土台として残す。</p>
+    </div>
+
+    <div class="step-card">
+      <h3><span class="no-tag">2</span>課題ごとの深掘りマップ（新設・資料の中心）</h3>
+      <p>認知度・採択率・支援体制の空白・制度の永続性リスクの4つの課題それぞれについて、以下を1セットにして整理する（流郷さんの提案プロセスに準拠）。</p>
+      <ul>
+        <li>当事者の困りごと（仮説／未確認）</li>
+        <li>発生条件（いつ・誰に・どんな条件で起きるか）</li>
+        <li>原因の仮説（複数候補を併記、決め打ちしない）</li>
+        <li>現行対応（JANPIA内製か外部委託か、対応の有無）</li>
+        <li>未解決部分</li>
+        <li>解決の選択肢（この段階で初めて「SPICEが関与できる可能性」を選択肢の一つとして添える。前提ではなく最後の一項目）</li>
+      </ul>
+    </div>
+
+    <div class="step-card">
+      <h3><span class="no-tag">3</span>JANPIA自身の現在地と望ましい姿のギャップ</h3>
+      <p>統合報告書の年次報告はあるが数年後の「望ましい状態」は明文化されていない、という品田さんの指摘を軸にした章。ここで初めて「5〜10年後」を扱うが、SPICEの仮説としてではなく「JANPIAに一緒に埋めてもらう空白」として提示する。</p>
+    </div>
+
+    <div class="step-card">
+      <h3><span class="no-tag">4</span>ステークホルダーの分解</h3>
+      <p>FDO／ADO／実行団体／NPO／企業／自治体／一般国民について、JANPIAとの関係の近さ（直接やり取りの有無）ごとに解像度の差を可視化する。「認知度を誰に対して上げたいのか」という前提確認に直結させる。</p>
+    </div>
+
+    <div class="step-card">
+      <h3><span class="no-tag">5</span>未確認事項・次のヒアリングで埋める空白（末尾）</h3>
+      <p>4軸の仮説はここに「検証待ちの選択肢」として格下げする。「SPICEとしてはこういう可能性を考えているが、まだ何も決めていない」という温度感を明示。</p>
+    </div>
+  </section>
+
+  <section id="s3">
+    <h2 class="section-title">3. やらないこと</h2>
+    <ul>
+      <li>「プラットフォーム／OS」など役割分担を規定する比喩は使わない（先方合意前に関係性を既定路線化してしまうため）。</li>
+      <li>数値目標やタイムライン（2027〜2036年のシナリオ表）は、課題の一次ヒアリングが終わるまで作らない。</li>
+    </ul>
+  </section>
+
+  <section id="s4">
+    <h2 class="section-title">4. 質問項目のブラッシュアップ｜追加すべき観点</h2>
+    <p>現行の<a href="../20260806-mtg-questions/">20260806-mtg-questions</a>は6テーマ（認知度／採択率／支援空白／現在地・将来像／10周年／進め方）で洗い出し済み。以下の観点が抜けているため追加する。</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>観点</th><th>追加する質問例</th><th>抜けていた理由</th></tr>
+        <tr><td>発生条件を聞く</td><td>「認知度が低いことで、実際に困った・不利益が出た具体的な場面はあるか」「採択されなかった申請には、どんな共通条件があるか」</td><td>現行リストは原因の仮説を聞くに留まり、「どんな条件で問題が起きるか」を聞く設問がない</td></tr>
+        <tr><td>解決の選択肢を聞く（ヒアリングの締め）</td><td>「この課題を解決するとしたら、JANPIA内で検討している選択肢は何があるか。外部（SPICE含む）に期待する余地はあるか」</td><td>課題ヒアリングで終わっており、次のアクションにつなげる質問がない</td></tr>
+        <tr><td>制度の永続性リスク</td><td>「制度の見直しはどのようなタイミング・基準で行われるか。次回はいつ想定されるか」</td><td>品田さんの指摘（数年ごとの見直しリスク）が背景情報止まりで、直接の質問になっていない</td></tr>
+        <tr><td>短期思考からの逆算</td><td>「直近半年の施策は、何年後のどんな状態から逆算して決めているか。半年ごとの検討サイクルを変える余地はあるか」</td><td>品田さんの指摘（半年ごとの機能検討で短期思考になっている）が質問化されていない</td></tr>
+        <tr><td>実行団体との距離</td><td>「JANPIAから見て、直接やり取りのある団体とその先の実行団体・NPOとで、課題認識にギャップはあるか」</td><td>流郷さんの指摘（先にいるNPO・実行団体の解像度が低い）が質問化されていない</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="s5">
+    <h2 class="section-title">5. NPO・実行団体ヒアリング用の別リスト（新規・未着手）</h2>
+    <div class="note" style="margin-bottom: 20px;">現行の質問リストはJANPIA本体向け。実行団体・NPOへのヒアリング（残タスク③）用に、視点を変えた別リストが必要。</div>
+    <div class="step-card">
+      <ul>
+        <li>休眠預金制度・JANPIAを知ったきっかけは何か。申請前にどこで情報を得たか。</li>
+        <li>申請書類作成で最も詰まった・時間がかかった点は何か。外部の支援（SPICE含む）があれば助かったと感じた場面はあるか。</li>
+        <li>採択後の伴走・フォローアップで、あってよかったもの／足りないと感じたものは何か。</li>
+        <li>JANPIA・資金分配団体とのやり取りで、分かりにくい・改善してほしいと感じた点は何か。</li>
+        <li>自分たちのような団体にとって、休眠預金制度は他の助成金と比べて何が違うと感じるか。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="s6">
+    <h2 class="section-title">6. 次のアクション</h2>
+    <div class="table-wrap">
+      <table>
+        <tr><th>No.</th><th>アクション</th><th>担当</th><th>備考</th></tr>
+        <tr><td>1</td><td>上記構成案で5to10year-visionの作り直しに着手</td><td><span class="tag-spice">車さん</span></td><td>SPICEの提供価値・4軸は末尾に格下げ</td></tr>
+        <tr><td>2</td><td>質問項目リストに追加観点を反映、優先度を絞り込み</td><td><span class="tag-spice">車さん</span>・<span class="tag-spice">品田さん</span></td><td>NPO向け別リストも並行整備</td></tr>
+        <tr><td>3</td><td>NPO・実行団体（10月結果の公益社団法人）ヒアリング手配、上記NPO向けリストを使用</td><td><span class="tag-spice">品田さん</span></td><td>流郷さんも他団体への聞き取りに協力</td></tr>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  本ドキュメントはJANPIA様への提示前・社内検討用のたたき台です。優先度・表現は社内協議を経て確定させること。
+</footer>
+
+<script>
+  const links = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('section[id^="s"]');
+  const map = new Map();
+  links.forEach(l => map.set(l.getAttribute('data-sec'), l));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const num = entry.target.id.replace('s', '');
+      const link = map.get(num);
+      if (!link) return;
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
